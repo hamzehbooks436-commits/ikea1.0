@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>IKEA - Living Room</title>
+
+    <style>
+        body {
+            background-color: #fffff0;
+        }
+
+        .myDiv {
+            border: 1px outset white;
+            background-color: white;
+            text-align: center;
+            width: 800px;
+            margin: auto;
+        }
+
+        .logo {
+            width: 400px;
+        }
+
+        .icon {
+            width: 65px;
+        }
+
+        table {
+            margin: auto;
+            border-collapse: separate;
+            border-spacing: 18px;
+        }
+
+        td {
+            width: 180px;
+            vertical-align: top;
+            text-align: center;
+        }
+
+        .product {
+            width: 150px;
+            height: 130px;
+            object-fit: contain;
+        }
+
+        button {
+            padding: 6px 10px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+
+<font size="5">
+
+<div class="myDiv">
+
+    <a href="index.html">
+        <img src="logo.gif" class="logo">
+    </a>
+
+    <a href="Cart.html">
+        <img src="Cart.gif" class="icon">
+    </a>
+
+    <a href="login.html">
+        <img src="acc.gif" class="icon">
+    </a>
+
+    <a href="account.html">
+        <img src="ikeabook.gif" class="icon">
+    </a>
+
+    <br><br>
+
+    <a href="newproducts.html">New Products</a>
+    <a href="livingroom.html">Living Room</a>
+    <a href="Kitchen.html">Kitchen</a>
+    <a href="Bedroom.html">Bedroom</a>
+    <a href="Childrenroom.html">Children's Room</a>
+    <a href="Outdoors.html">Outdoors</a>
+    <a href="Office.html">Office</a>
+
+    <br><br>
+
+    <h2>Living Room</h2>
+
+    <table>
+        <tr>
+            <td>
+                <img src="Living Room/bookcase1.jpg" class="product"><br>
+                KALLAX<br>
+                Bookcase<br>
+                <span data-usd-price="79.99">$79.99</span><br>
+                <button data-name="KALLAX Bookcase" data-price="79.99" data-image="Living Room/bookcase1.jpg" onclick="addProduct(this)">Add to Cart</button>
+            </td>
+
+            <td>
+                <img src="Living Room/carpet1.jpg" class="product"><br>
+                VEDB&Auml;K<br>
+                Carpet<br>
+                <span data-usd-price="49.99">$49.99</span><br>
+                <button data-name="VEDBAK Carpet" data-price="49.99" data-image="Living Room/carpet1.jpg" onclick="addProduct(this)">Add to Cart</button>
+            </td>
+
+            <td>
+                <img src="Living Room/carpet2.jpg" class="product"><br>
+                LOHALS<br>
+                Carpet<br>
+                <span data-usd-price="69.99">$69.99</span><br>
+                <button data-name="LOHALS Carpet" data-price="69.99" data-image="Living Room/carpet2.jpg" onclick="addProduct(this)">Add to Cart</button>
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <img src="Living Room/chair001.jpg" class="product"><br>
+                PO&Auml;NG<br>
+                Armchair<br>
+                <span data-usd-price="89.99">$89.99</span><br>
+                <button data-name="POANG Armchair" data-price="89.99" data-image="Living Room/chair001.jpg" onclick="addProduct(this)">Add to Cart</button>
+            </td>
+
+            <td>
+                <img src="Living Room/coffeetable.jpg" class="product"><br>
+                LACK<br>
+                Coffee Table<br>
+                <span data-usd-price="29.99">$29.99</span><br>
+                <button data-name="LACK Coffee Table" data-price="29.99" data-image="Living Room/coffeetable.jpg" onclick="addProduct(this)">Add to Cart</button>
+            </td>
+
+            <td>
+                <img src="Living Room/cushionvovers.jpg" class="product"><br>
+                SANELA<br>
+                Cushion Covers<br>
+                <span data-usd-price="7.99">$7.99</span><br>
+                <button data-name="SANELA Cushion Covers" data-price="7.99" data-image="Living Room/cushionvovers.jpg" onclick="addProduct(this)">Add to Cart</button>
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <img src="Living Room/righthandchaise.jpg" class="product"><br>
+                S&Ouml;DERHAMN<br>
+                Right-hand Chaise<br>
+                <span data-usd-price="299.99">$299.99</span><br>
+                <button data-name="SODERHAMN Right-hand Chaise" data-price="299.99" data-image="Living Room/righthandchaise.jpg" onclick="addProduct(this)">Add to Cart</button>
+            </td>
+
+            <td>
+                <img src="Living Room/sofa1.jpg" class="product"><br>
+                KLIPPAN<br>
+                Sofa<br>
+                <span data-usd-price="249.99">$249.99</span><br>
+                <button data-name="KLIPPAN Sofa" data-price="249.99" data-image="Living Room/sofa1.jpg" onclick="addProduct(this)">Add to Cart</button>
+            </td>
+
+            <td>
+                <img src="Living Room/sofa2.jpg" class="product"><br>
+                EKTORP<br>
+                Sofa<br>
+                <span data-usd-price="349.99">$349.99</span><br>
+                <button data-name="EKTORP Sofa" data-price="349.99" data-image="Living Room/sofa2.jpg" onclick="addProduct(this)">Add to Cart</button>
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <img src="Living Room/sofa3.jpg" class="product"><br>
+                FRIHETEN<br>
+                Sofa Bed<br>
+                <span data-usd-price="499.99">$499.99</span><br>
+                <button data-name="FRIHETEN Sofa Bed" data-price="499.99" data-image="Living Room/sofa3.jpg" onclick="addProduct(this)">Add to Cart</button>
+            </td>
+
+            <td>
+                <img src="Living Room/sofa4.jpg" class="product"><br>
+                LANDSKRONA<br>
+                Sofa<br>
+                <span data-usd-price="599.99">$599.99</span><br>
+                <button data-name="LANDSKRONA Sofa" data-price="599.99" data-image="Living Room/sofa4.jpg" onclick="addProduct(this)">Add to Cart</button>
+            </td>
+
+            <td>
+                <img src="Living Room/throw1.jpg" class="product"><br>
+                VITMOSSA<br>
+                Throw Blanket<br>
+                <span data-usd-price="14.99">$14.99</span><br>
+                <button data-name="VITMOSSA Throw Blanket" data-price="14.99" data-image="Living Room/throw1.jpg" onclick="addProduct(this)">Add to Cart</button>
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <img src="Living Room/tvstand1.jpg" class="product"><br>
+                BEST&Aring;<br>
+                TV Stand<br>
+                <span data-usd-price="129.99">$129.99</span><br>
+                <button data-name="BESTA TV Stand" data-price="129.99" data-image="Living Room/tvstand1.jpg" onclick="addProduct(this)">Add to Cart</button>
+            </td>
+
+            <td>
+                <img src="Living Room/tvstand2.jpg" class="product"><br>
+                LAPPLAND<br>
+                TV Storage Unit<br>
+                <span data-usd-price="199.99">$199.99</span><br>
+                <button data-name="LAPPLAND TV Storage Unit" data-price="199.99" data-image="Living Room/tvstand2.jpg" onclick="addProduct(this)">Add to Cart</button>
+            </td>
+
+            <td>
+                <img src="Living Room/tvstand3.jpg" class="product"><br>
+                BRIMNES<br>
+                TV Stand<br>
+                <span data-usd-price="149.99">$149.99</span><br>
+                <button data-name="BRIMNES TV Stand" data-price="149.99" data-image="Living Room/tvstand3.jpg" onclick="addProduct(this)">Add to Cart</button>
+            </td>
+        </tr>
+    </table>
+
+    <br>
+
+    <a href="index.html">&larr; Return to Home</a>
+
+    <hr>
+
+    <p>
+        &copy; 2026 IKEA |
+        <a href="Cu.html">Contact Us</a> |
+        <a href="pp.html">Privacy Policy</a>
+    </p>
+
+</div>
+
+</font>
+
+<script src="currency.js"></script>
+<script src="orderSyncConfig.js"></script>
+<script src="accountSync.js"></script>
+<script>
+function addProduct(button) {
+    let usdPrice = Number(button.getAttribute("data-price"));
+    let product = {
+        name: button.getAttribute("data-name"),
+        price: formatCurrency(usdPrice),
+        usdPrice: usdPrice.toFixed(2),
+        image: button.getAttribute("data-image"),
+        qty: 1
+    };
+
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+    let existing = cart.find(item => item.name === product.name);
+
+    if (existing) {
+        existing.qty += 1;
+    } else {
+        cart.push(product);
+    }
+
+    localStorage.setItem("cart", JSON.stringify(cart));
+
+    if (window.AccountSync) {
+        AccountSync.saveCart(cart);
+    }
+
+    alert("Added to cart!");
+}
+</script>
+
+</body>
+</html>

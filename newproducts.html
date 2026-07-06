@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>IKEA - New Products</title>
+
+    <style>
+        body {
+            background-color: #fffff0;
+        }
+
+        .myDiv {
+            border: 1px outset white;
+            background-color: white;
+            text-align: center;
+            width: 800px;
+            margin: auto;
+        }
+
+        .logo {
+            width: 400px;
+        }
+
+        .icon {
+            width: 65px;
+        }
+
+        table {
+            margin: auto;
+            border-collapse: separate;
+            border-spacing: 18px;
+        }
+
+        td {
+            width: 180px;
+            vertical-align: top;
+            text-align: center;
+        }
+
+        .product {
+            width: 150px;
+            height: 130px;
+            object-fit: contain;
+        }
+
+        button {
+            padding: 6px 10px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+
+<font size="5">
+
+<div class="myDiv">
+
+    <a href="index.html">
+        <img src="logo.gif" class="logo">
+    </a>
+
+    <a href="Cart.html">
+        <img src="Cart.gif" class="icon">
+    </a>
+
+    <a href="login.html">
+        <img src="acc.gif" class="icon">
+    </a>
+
+    <a href="account.html">
+        <img src="ikeabook.gif" class="icon">
+    </a>
+
+    <br><br>
+
+    <a href="newproducts.html">New Products</a>
+    <a href="livingroom.html">Living Room</a>
+    <a href="Kitchen.html">Kitchen</a>
+    <a href="Bedroom.html">Bedroom</a>
+    <a href="Childrenroom.html">Children's Room</a>
+    <a href="Outdoors.html">Outdoors</a>
+    <a href="Office.html">Office</a>
+
+    <br><br>
+
+    <h2>New Products</h2>
+
+    <table>
+        <tr>
+            <td>
+                <img src="New Products/Artificialplants.jpg" class="product"><br>
+                GR&Ouml;NSKA<br>
+                Artificial Plant<br>
+                <span data-usd-price="12.99">$12.99</span><br>
+                <button data-name="GRONSKA Artificial Plant" data-price="12.99" data-image="New Products/Artificialplants.jpg" onclick="addProduct(this)">Add to Cart</button>
+            </td>
+
+            <td>
+                <img src="New Products/chair01.jpg" class="product"><br>
+                SOLBACKA<br>
+                Accent Chair<br>
+                <span data-usd-price="69.99">$69.99</span><br>
+                <button data-name="SOLBACKA Accent Chair" data-price="69.99" data-image="New Products/chair01.jpg" onclick="addProduct(this)">Add to Cart</button>
+            </td>
+
+            <td>
+                <img src="New Products/constructionset.jpg" class="product"><br>
+                BYGGLEK<br>
+                Construction Set<br>
+                <span data-usd-price="14.99">$14.99</span><br>
+                <button data-name="BYGGLEK Construction Set" data-price="14.99" data-image="New Products/constructionset.jpg" onclick="addProduct(this)">Add to Cart</button>
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <img src="New Products/rockingchair1.jpg" class="product"><br>
+                LILLBERG<br>
+                Rocking Chair<br>
+                <span data-usd-price="89.99">$89.99</span><br>
+                <button data-name="LILLBERG Rocking Chair" data-price="89.99" data-image="New Products/rockingchair1.jpg" onclick="addProduct(this)">Add to Cart</button>
+            </td>
+
+            <td>
+                <img src="New Products/sofa01.jpg" class="product"><br>
+                HEMN&Auml;S<br>
+                Sofa<br>
+                <span data-usd-price="249.99">$249.99</span><br>
+                <button data-name="HEMNAS Sofa" data-price="249.99" data-image="New Products/sofa01.jpg" onclick="addProduct(this)">Add to Cart</button>
+            </td>
+
+            <td>
+                <img src="Office/blackinkhp.avif" class="product"><br>
+                SVARTBL&Auml;CK<br>
+                Printer Ink<br>
+                <b>FREE</b><br>
+                <button data-name="SVARTBLACK Printer Ink" data-price="0.00" data-image="Office/blackinkhp.avif" onclick="addProduct(this)">Add to Cart</button>
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <img src="Office/camera1.jpg" class="product"><br>
+                FOTOGRAF<br>
+                Camera<br>
+                <b>FREE</b><br>
+                <button data-name="FOTOGRAF Camera" data-price="0.00" data-image="Office/camera1.jpg" onclick="addProduct(this)">Add to Cart</button>
+            </td>
+
+            <td>
+                <img src="Childrens room/arts/Brushset.avif" class="product"><br>
+                M&Aring;LA<br>
+                Brush Set<br>
+                <b>FREE</b><br>
+                <button data-name="MALA Brush Set" data-price="0.00" data-image="Childrens room/arts/Brushset.avif" onclick="addProduct(this)">Add to Cart</button>
+            </td>
+
+            <td>
+                <img src="Childrens room/arts/pencils.jpg" class="product"><br>
+                F&Auml;RGPENNA<br>
+                Colored Pencils<br>
+                <b>FREE</b><br>
+                <button data-name="FARGPENNA Colored Pencils" data-price="0.00" data-image="Childrens room/arts/pencils.jpg" onclick="addProduct(this)">Add to Cart</button>
+            </td>
+        </tr>
+    </table>
+
+    <br>
+
+    <a href="index.html">&larr; Return to Home</a>
+
+    <hr>
+
+    <p>
+        &copy; 2026 IKEA |
+        <a href="Cu.html">Contact Us</a> |
+        <a href="pp.html">Privacy Policy</a>
+    </p>
+
+</div>
+
+</font>
+
+<script src="currency.js"></script>
+<script src="orderSyncConfig.js"></script>
+<script src="accountSync.js"></script>
+<script>
+function addProduct(button) {
+    let usdPrice = Number(button.getAttribute("data-price"));
+    let product = {
+        name: button.getAttribute("data-name"),
+        price: usdPrice === 0 ? "FREE" : formatCurrency(usdPrice),
+        usdPrice: usdPrice.toFixed(2),
+        image: button.getAttribute("data-image"),
+        qty: 1
+    };
+
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+    let existing = cart.find(item => item.name === product.name);
+
+    if (existing) {
+        existing.qty += 1;
+    } else {
+        cart.push(product);
+    }
+
+    localStorage.setItem("cart", JSON.stringify(cart));
+
+    if (window.AccountSync) {
+        AccountSync.saveCart(cart);
+    }
+
+    alert("Added to cart!");
+}
+</script>
+
+</body>
+</html>
