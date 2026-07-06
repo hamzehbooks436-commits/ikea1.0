@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>GULLIVER Crib - IKEA</title>
+
+    <style>
+        body {
+            background-color: #fffff0;
+        }
+
+        .myDiv {
+            border: 1px outset white;
+            background-color: white;
+            text-align: center;
+            width: 800px;
+            margin: auto;
+        }
+
+        .logo {
+            width: 400px;
+        }
+
+        .icon {
+            width: 65px;
+        }
+
+        .product {
+            width: 300px;
+        }
+
+        table {
+            margin: auto;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="myDiv">
+
+    <a href="index.html">
+        <img src="logo.gif" class="logo">
+    </a>
+
+    <a href="Cart.html">
+        <img src="Cart.gif" class="icon">
+    </a>
+
+    <a href="login.html">
+        <img src="acc.gif" class="icon">
+    </a>
+
+    <a href="account.html">
+        <img src="ikeabook.gif" class="icon">
+    </a>
+
+    <br><br>
+
+    <h2 id="name">GULLIVER Crib</h2>
+
+    <img src="crib01.jpg" class="product" id="img">
+
+    <br><br>
+
+    <table cellpadding="8">
+
+        <tr>
+            <td><b>Product Name:</b></td>
+            <td id="pname">GULLIVER Crib</td>
+        </tr>
+
+        <tr>
+            <td><b>Category:</b></td>
+            <td id="pcat">Children's Room</td>
+        </tr>
+
+        <tr>
+            <td><b>Price:</b></td>
+            <td id="pprice" data-usd-price="99.99">$99.99</td>
+        </tr>
+
+        <tr>
+            <td><b>Color:</b></td>
+            <td id="pcolor">White</td>
+        </tr>
+
+        <tr>
+            <td><b>Material:</b></td>
+            <td id="pmat">Wood</td>
+        </tr>
+
+        <tr>
+            <td><b>Dimensions:</b></td>
+            <td>Length &times; Width &times; Height</td>
+        </tr>
+
+        <tr>
+            <td><b>Description:</b></td>
+            <td>Crib for a baby room.</td>
+        </tr>
+
+    </table>
+
+    <br>
+
+    <button onclick="addToCart()">Add to Cart</button>
+
+    <br><br>
+
+    <a href="index.html">&larr; Return to Home</a>
+
+    <hr>
+
+    <p>
+        &copy; 2026 IKEA |
+        <a href="Cu.html">Contact Us</a> |
+        <a href="pp.html">Privacy Policy</a>
+    </p>
+
+</div>
+
+<script src="currency.js"></script>
+
+<script>
+function addToCart() {
+    let product = {
+        name: document.getElementById("pname").innerText,
+        price: document.getElementById("pprice").innerText,
+        usdPrice: document.getElementById("pprice").getAttribute("data-usd-price"),
+        image: document.getElementById("img").src,
+        qty: 1
+    };
+
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+    let existing = cart.find(item => item.name === product.name);
+
+    if (existing) {
+        existing.qty += 1;
+    } else {
+        cart.push(product);
+    }
+
+    localStorage.setItem("cart", JSON.stringify(cart));
+
+    alert("Added to cart!");
+}
+</script>
+
+</body>
+</html>

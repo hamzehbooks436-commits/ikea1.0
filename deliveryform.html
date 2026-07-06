@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>IKEA - Delivery Form</title>
+
+    <style>
+        body {
+            background-color: #fffff0;
+        }
+
+        .myDiv {
+            border: 1px outset white;
+            background-color: white;
+            text-align: center;
+            width: 800px;
+            margin: auto;
+        }
+
+        .logo {
+            width: 400px;
+        }
+
+        .icon {
+            width: 65px;
+        }
+
+        .truck {
+            width: 120px;
+        }
+
+        table {
+            margin: auto;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 8px;
+            border: 1px solid #ccc;
+        }
+
+        .formTable td {
+            border: 0;
+            text-align: left;
+        }
+
+        input, select, textarea {
+            width: 260px;
+            padding: 6px;
+        }
+
+        textarea {
+            height: 70px;
+        }
+
+        button {
+            padding: 8px 14px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="myDiv">
+
+    <a href="index.html">
+        <img src="logo.gif" class="logo">
+    </a>
+
+    <a href="Cart.html">
+        <img src="Cart.gif" class="icon">
+    </a>
+
+    <a href="login.html">
+        <img src="acc.gif" class="icon">
+    </a>
+
+    <a href="account.html">
+        <img src="ikeabook.gif" class="icon">
+    </a>
+
+    <br><br>
+
+    <h2>Delivery Form</h2>
+
+    <h3>Your Order</h3>
+
+    <table id="orderTable">
+        <tr>
+            <th>Product</th>
+            <th>Name</th>
+            <th>Price</th>
+            <th>Quantity</th>
+        </tr>
+    </table>
+
+    <h3 id="total" data-usd-price="0" data-price-prefix="Total: ">Total: $0.00</h3>
+
+    <hr>
+
+    <h3>Delivery Details</h3>
+
+    <table class="formTable" cellpadding="6">
+        <tr>
+            <td><b>Full Name:</b></td>
+            <td><input type="text" id="fullName"></td>
+        </tr>
+
+        <tr>
+            <td><b>Phone Number:</b></td>
+            <td><input type="text" id="phone"></td>
+        </tr>
+
+        <tr>
+            <td><b>Email:</b></td>
+            <td><input type="email" id="email"></td>
+        </tr>
+
+        <tr>
+            <td><b>Address:</b></td>
+            <td><input type="text" id="address"></td>
+        </tr>
+
+        <tr>
+            <td><b>City:</b></td>
+            <td><input type="text" id="city"></td>
+        </tr>
+
+        <tr>
+            <td><b>Zip Code:</b></td>
+            <td><input type="text" id="zip"></td>
+        </tr>
+
+        <tr>
+            <td><b>Delivery Date:</b></td>
+            <td><input type="date" id="deliveryDate"></td>
+        </tr>
+
+        <tr>
+            <td><b>Payment Method:</b></td>
+            <td>
+                <select id="paymentMethod" onchange="toggleCardFields()">
+                    <option value="">Choose payment method</option>
+                    <option value="Cash on Delivery">Cash on Delivery</option>
+                    <option value="Credit Card">Credit Card</option>
+                    <option value="Debit Card">Debit Card</option>
+                </select>
+            </td>
+        </tr>
+
+        <tr class="cardField">
+            <td><b>Name on Card:</b></td>
+            <td><input type="text" id="cardName"></td>
+        </tr>
+
+        <tr class="cardField">
+            <td><b>Card Number:</b></td>
+            <td><input type="text" id="cardNumber" maxlength="19"></td>
+        </tr>
+
+        <tr class="cardField">
+            <td><b>Expiry Date:</b></td>
+            <td><input type="month" id="expiryDate"></td>
+        </tr>
+
+        <tr>
+            <td><b>Other Details:</b></td>
+            <td><textarea id="notes"></textarea></td>
+        </tr>
+    </table>
+
+    <br>
+
+    <img src="Truck.jpg" class="truck">
+
+    <br><br>
+
+    <button onclick="deliverOrder()">Deliver to Me</button>
+
+    <br><br>
+
+    <a href="Cart.html">&larr; Return to Cart</a>
+
+    <hr>
+
+    <p>
+        &copy; 2026 IKEA |
+        <a href="Cu.html">Contact Us</a> |
+        <a href="pp.html">Privacy Policy</a>
+    </p>
+
+</div>
+
+<script src="currency.js"></script>
+<script src="orderSyncConfig.js"></script>
+<script src="orderSync.js"></script>
+
+<script>
+let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+function getItemUsdPrice(item) {
+    let oldPrice = String(item.price || "").replace(/[^0-9.]/g, "");
+    return Number(item.usdPrice || oldPrice || 0);
+}
+
+function loadOrder() {
+    if (cart.length === 0) {
+        alert("Your cart is empty!");
+        window.location.href = "Cart.html";
+        return;
+    }
+
+    let table = document.getElementById("orderTable");
+    let total = getTotalUsd();
+
+    cart.forEach(item => {
+        let usdPrice = getItemUsdPrice(item);
+
+        table.innerHTML += `
+            <tr>
+                <td><img src="${item.image}" width="60"></td>
+                <td>${item.name}</td>
+                <td data-usd-price="${usdPrice}">${formatCurrency(usdPrice)}</td>
+                <td>${item.qty}</td>
+            </tr>
+        `;
+    });
+
+    document.getElementById("total").setAttribute("data-usd-price", total.toFixed(2));
+    document.getElementById("total").innerText = "Total: " + formatCurrency(total);
+    applyCurrency();
+}
+
+function toggleCardFields() {
+    let paymentMethod = document.getElementById("paymentMethod").value;
+    let cardFields = document.getElementsByClassName("cardField");
+
+    for (let i = 0; i < cardFields.length; i++) {
+        cardFields[i].style.display =
+            paymentMethod === "Credit Card" || paymentMethod === "Debit Card" ? "table-row" : "none";
+    }
+}
+
+function getTotalUsd() {
+    let total = 0;
+
+    cart.forEach(item => {
+        total += getItemUsdPrice(item) * item.qty;
+    });
+
+    return total;
+}
+
+function getCardLastFour() {
+    let cardNumber = document.getElementById("cardNumber").value.replace(/\s/g, "");
+
+    if (cardNumber.length < 4) {
+        return "";
+    }
+
+    return cardNumber.slice(cardNumber.length - 4);
+}
+
+async function deliverOrder() {
+    let paymentMethod = document.getElementById("paymentMethod").value;
+    let needsCard = paymentMethod === "Credit Card" || paymentMethod === "Debit Card";
+
+    if (
+        document.getElementById("fullName").value === "" ||
+        document.getElementById("phone").value === "" ||
+        document.getElementById("email").value === "" ||
+        document.getElementById("address").value === "" ||
+        document.getElementById("city").value === "" ||
+        document.getElementById("zip").value === "" ||
+        document.getElementById("deliveryDate").value === "" ||
+        paymentMethod === ""
+    ) {
+        alert("Please fill in all delivery details.");
+        return;
+    }
+
+    if (
+        needsCard &&
+        (document.getElementById("cardName").value === "" ||
+        document.getElementById("cardNumber").value === "" ||
+        document.getElementById("expiryDate").value === "")
+    ) {
+        alert("Please fill in the card payment details.");
+        return;
+    }
+
+    let order = {
+        id: Date.now(),
+        date: new Date().toLocaleString(),
+        customer: {
+            fullName: document.getElementById("fullName").value,
+            phone: document.getElementById("phone").value,
+            email: document.getElementById("email").value
+        },
+        address: {
+            street: document.getElementById("address").value,
+            city: document.getElementById("city").value,
+            zip: document.getElementById("zip").value,
+            deliveryDate: document.getElementById("deliveryDate").value
+        },
+        payment: {
+            method: paymentMethod,
+            cardName: needsCard ? document.getElementById("cardName").value : "",
+            cardLastFour: needsCard ? getCardLastFour() : ""
+        },
+        notes: document.getElementById("notes").value,
+        items: cart,
+        totalUsd: getTotalUsd().toFixed(2),
+        total: "$" + getTotalUsd().toFixed(2)
+    };
+
+    await OrderSync.addOrder(order);
+    localStorage.removeItem("cart");
+
+    alert("Your order was sent for delivery!");
+    window.location.href = "index.html";
+}
+
+toggleCardFields();
+loadOrder();
+</script>
+
+</body>
+</html>

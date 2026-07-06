@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>IKEA - Admin Orders</title>
+
+    <style>
+        body {
+            background-color: #fffff0;
+        }
+
+        .myDiv {
+            border: 1px outset white;
+            background-color: white;
+            text-align: center;
+            width: 900px;
+            margin: auto;
+        }
+
+        .logo {
+            width: 400px;
+        }
+
+        .icon {
+            width: 65px;
+        }
+
+        table {
+            margin: auto;
+            border-collapse: collapse;
+            width: 95%;
+        }
+
+        th, td {
+            padding: 8px;
+            border: 1px solid #ccc;
+            vertical-align: top;
+        }
+
+        .orderBox {
+            border: 1px solid #ccc;
+            margin: 20px;
+            padding: 15px;
+            text-align: left;
+        }
+
+        .center {
+            text-align: center;
+        }
+
+        button {
+            padding: 8px 14px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="myDiv">
+
+    <a href="index.html">
+        <img src="logo.gif" class="logo">
+    </a>
+
+    <a href="Cart.html">
+        <img src="Cart.gif" class="icon">
+    </a>
+
+    <a href="login.html">
+        <img src="acc.gif" class="icon">
+    </a>
+
+    <a href="account.html">
+        <img src="ikeabook.gif" class="icon">
+    </a>
+
+    <br><br>
+
+    <h2>Admin Orders</h2>
+
+    <p>
+        <a href="sales.html">Sales Page</a>
+    </p>
+
+    <p id="syncStatus"></p>
+
+    <div id="ordersArea"></div>
+
+    <br>
+
+    <a href="index.html">&larr; Return to Home</a>
+
+    <hr>
+
+    <p>
+        &copy; 2026 IKEA |
+        <a href="Cu.html">Contact Us</a> |
+        <a href="pp.html">Privacy Policy</a>
+    </p>
+
+</div>
+
+<script src="currency.js"></script>
+<script src="orderSyncConfig.js"></script>
+<script src="orderSync.js"></script>
+
+<script>
+if (localStorage.getItem("adminLoggedIn") !== "yes") {
+    window.location.href = "login.html";
+}
+
+document.getElementById("syncStatus").innerText =
+    OrderSync.hasOnlineDatabase() ? "Cross-device order sync is on." : "Cross-device order sync needs an online database URL.";
+
+function getItemUsdPrice(item) {
+    let oldPrice = String(item.price || "").replace(/[^0-9.]/g, "");
+    return Number(item.usdPrice || oldPrice || 0);
+}
+
+function getOrderUsdTotal(order) {
+    if (order.totalUsd) {
+        return Number(order.totalUsd);
+    }
+
+    return Number(String(order.total || "").replace(/[^0-9.]/g, "") || 0);
+}
+
+async function loadOrders() {
+    let orders = await OrderSync.getOrders();
+    let ordersArea = document.getElementById("ordersArea");
+
+    ordersArea.innerHTML = "";
+
+    if (orders.length === 0) {
+        ordersArea.innerHTML = "<h3>No orders waiting for delivery.</h3>";
+        return;
+    }
+
+    orders.forEach((order, index) => {
+        let itemsRows = "";
+
+        order.items.forEach(item => {
+            let usdPrice = getItemUsdPrice(item);
+
+            itemsRows += `
+                <tr>
+                    <td><img src="${item.image}" width="60"></td>
+                    <td>${item.name}</td>
+                    <td data-usd-price="${usdPrice}">${formatCurrency(usdPrice)}</td>
+                    <td>${item.qty}</td>
+                </tr>
+            `;
+        });
+
+        let orderTotal = getOrderUsdTotal(order);
+
+        ordersArea.innerHTML += `
+            <div class="orderBox">
+                <h3>Order #${order.id}</h3>
+                <p><b>Order Date:</b> ${order.date}</p>
+
+                <h4>Customer Details</h4>
+                <p><b>Name:</b> ${order.customer.fullName}</p>
+                <p><b>Phone:</b> ${order.customer.phone}</p>
+                <p><b>Email:</b> ${order.customer.email}</p>
+
+                <h4>Address Details</h4>
+                <p><b>Address:</b> ${order.address.street}</p>
+                <p><b>City:</b> ${order.address.city}</p>
+                <p><b>Zip Code:</b> ${order.address.zip}</p>
+                <p><b>Delivery Date:</b> ${order.address.deliveryDate}</p>
+
+                <h4>Payment Details</h4>
+                <p><b>Payment Method:</b> ${order.payment.method}</p>
+                <p><b>Name on Card:</b> ${order.payment.cardName || "Not needed"}</p>
+                <p><b>Card Last 4 Digits:</b> ${order.payment.cardLastFour || "Not needed"}</p>
+
+                <h4>Other Details</h4>
+                <p>${order.notes || "No extra details."}</p>
+
+                <h4>Products</h4>
+                <table>
+                    <tr>
+                        <th>Product</th>
+                        <th>Name</th>
+                        <th>Price</th>
+                        <th>Quantity</th>
+                    </tr>
+                    ${itemsRows}
+                </table>
+
+                <h3 class="center" data-usd-price="${orderTotal}" data-price-prefix="Total: ">Total: ${formatCurrency(orderTotal)}</h3>
+                <p class="center"><button onclick="markDelivered(${order.id})">Delivered</button></p>
+            </div>
+        `;
+    });
+
+    applyCurrency();
+}
+
+async function markDelivered(orderId) {
+    await OrderSync.markDelivered(orderId);
+    await loadOrders();
+}
+
+loadOrders();
+setInterval(loadOrders, 10000);
+</script>
+
+</body>
+</html>

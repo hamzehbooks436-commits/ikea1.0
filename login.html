@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>IKEA - Login</title>
+
+    <style>
+        body {
+            background-color: #fffff0;
+        }
+
+        .myDiv {
+            border: 1px outset white;
+            background-color: white;
+            text-align: center;
+            width: 800px;
+            margin: auto;
+        }
+
+        .logo {
+            width: 400px;
+        }
+
+        .icon {
+            width: 65px;
+        }
+
+        table {
+            margin: auto;
+        }
+
+        td {
+            padding: 8px;
+            text-align: left;
+        }
+
+        input {
+            width: 230px;
+            padding: 6px;
+        }
+
+        button {
+            padding: 8px 14px;
+            cursor: pointer;
+        }
+
+        #message {
+            color: red;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="myDiv">
+
+    <a href="index.html">
+        <img src="logo.gif" class="logo">
+    </a>
+
+    <a href="Cart.html">
+        <img src="Cart.gif" class="icon">
+    </a>
+
+    <a href="login.html">
+        <img src="acc.gif" class="icon">
+    </a>
+
+    <a href="account.html">
+        <img src="ikeabook.gif" class="icon">
+    </a>
+
+    <br><br>
+
+    <h2>Account Login</h2>
+
+    <table>
+        <tr>
+            <td><b>User:</b></td>
+            <td><input type="text" id="username"></td>
+        </tr>
+
+        <tr>
+            <td><b>Password:</b></td>
+            <td><input type="password" id="password"></td>
+        </tr>
+    </table>
+
+    <p id="message"></p>
+
+    <button onclick="login()">Login</button>
+
+    <br><br>
+
+    <a href="index.html">&larr; Return to Home</a>
+
+    <hr>
+
+    <p>
+        &copy; 2026 IKEA |
+        <a href="Cu.html">Contact Us</a> |
+        <a href="pp.html">Privacy Policy</a>
+    </p>
+
+</div>
+
+<script src="currency.js"></script>
+
+<script>
+function login() {
+    let username = document.getElementById("username").value;
+    let password = document.getElementById("password").value;
+
+    if (username === "admin" && password === "1234admin") {
+        localStorage.setItem("adminLoggedIn", "yes");
+        localStorage.setItem("currentUser", username);
+        window.location.href = "admin.html";
+    } else if (username === "" || password === "") {
+        document.getElementById("message").innerText = "Please enter a user and password.";
+    } else {
+        localStorage.setItem("currentUser", username);
+        localStorage.setItem("adminLoggedIn", "no");
+        window.location.href = "account.html";
+    }
+}
+</script>
+
+</body>
+</html>

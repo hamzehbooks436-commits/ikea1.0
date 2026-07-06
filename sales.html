@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>IKEA - Sales Page</title>
+
+    <style>
+        body {
+            background-color: #fffff0;
+        }
+
+        .myDiv {
+            border: 1px outset white;
+            background-color: white;
+            text-align: center;
+            width: 900px;
+            margin: auto;
+        }
+
+        .logo {
+            width: 400px;
+        }
+
+        .icon {
+            width: 65px;
+        }
+
+        table {
+            margin: auto;
+            border-collapse: collapse;
+            width: 95%;
+        }
+
+        th, td {
+            padding: 8px;
+            border: 1px solid #ccc;
+            vertical-align: top;
+        }
+
+        .dayBox {
+            border: 1px solid #ccc;
+            margin: 20px;
+            padding: 15px;
+            text-align: left;
+        }
+
+        .center {
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="myDiv">
+
+    <a href="index.html">
+        <img src="logo.gif" class="logo">
+    </a>
+
+    <a href="Cart.html">
+        <img src="Cart.gif" class="icon">
+    </a>
+
+    <a href="login.html">
+        <img src="acc.gif" class="icon">
+    </a>
+
+    <a href="account.html">
+        <img src="ikeabook.gif" class="icon">
+    </a>
+
+    <br><br>
+
+    <h2>Sales Page</h2>
+
+    <p>
+        <a href="admin.html">Admin Orders</a>
+    </p>
+
+    <p id="syncStatus"></p>
+
+    <div id="salesArea"></div>
+
+    <br>
+
+    <a href="index.html">&larr; Return to Home</a>
+
+    <hr>
+
+    <p>
+        &copy; 2026 IKEA |
+        <a href="Cu.html">Contact Us</a> |
+        <a href="pp.html">Privacy Policy</a>
+    </p>
+
+</div>
+
+<script src="currency.js"></script>
+<script src="orderSyncConfig.js"></script>
+<script src="orderSync.js"></script>
+
+<script>
+if (localStorage.getItem("adminLoggedIn") !== "yes") {
+    window.location.href = "login.html";
+}
+
+document.getElementById("syncStatus").innerText =
+    OrderSync.hasOnlineDatabase() ? "Cross-device sales sync is on." : "Cross-device sales sync needs an online database URL.";
+
+function getSaleUsdTotal(sale) {
+    if (sale.totalUsd) {
+        return Number(sale.totalUsd);
+    }
+
+    return Number(String(sale.total || "").replace(/[^0-9.]/g, "") || 0);
+}
+
+async function loadSales() {
+    let sales = await OrderSync.getSales();
+    let salesArea = document.getElementById("salesArea");
+    let salesByDay = {};
+
+    salesArea.innerHTML = "";
+
+    if (sales.length === 0) {
+        salesArea.innerHTML = "<h3>No delivered sales yet.</h3>";
+        return;
+    }
+
+    sales.forEach(sale => {
+        let day = sale.saleDay || "Unknown Date";
+
+        if (!salesByDay[day]) {
+            salesByDay[day] = [];
+        }
+
+        salesByDay[day].push(sale);
+    });
+
+    Object.keys(salesByDay).forEach(day => {
+        let rows = "";
+        let dayTotal = 0;
+
+        salesByDay[day].forEach(sale => {
+            let products = "";
+
+            sale.items.forEach(item => {
+                products += item.name + " x " + item.qty + "<br>";
+            });
+
+            let saleTotal = getSaleUsdTotal(sale);
+            dayTotal += saleTotal;
+
+            rows += `
+                <tr>
+                    <td>${sale.id}</td>
+                    <td>${sale.customer.fullName}</td>
+                    <td>${products}</td>
+                    <td>${sale.payment.method}</td>
+                    <td data-usd-price="${saleTotal}">${formatCurrency(saleTotal)}</td>
+                    <td>${sale.deliveredDate}</td>
+                </tr>
+            `;
+        });
+
+        salesArea.innerHTML += `
+            <div class="dayBox">
+                <h3>Sales for ${day}</h3>
+
+                <table>
+                    <tr>
+                        <th>Order ID</th>
+                        <th>Customer</th>
+                        <th>Products</th>
+                        <th>Payment</th>
+                        <th>Total</th>
+                        <th>Delivered Time</th>
+                    </tr>
+                    ${rows}
+                </table>
+
+                <h3 class="center" data-usd-price="${dayTotal.toFixed(2)}" data-price-prefix="Daily Total: ">Daily Total: ${formatCurrency(dayTotal)}</h3>
+            </div>
+        `;
+    });
+
+    applyCurrency();
+}
+
+loadSales();
+setInterval(loadSales, 10000);
+</script>
+
+</body>
+</html>
